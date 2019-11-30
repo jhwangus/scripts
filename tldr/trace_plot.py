@@ -28,7 +28,8 @@ def usage():
 
 def main(argv):
     # getopt
-    max_num_line = 20
+    max_num_line = 24
+    mid_num_line = 10
     try:
         opts, args = getopt.getopt(argv, "h")
     except getopt.GetoptError:
@@ -39,7 +40,7 @@ def main(argv):
         if opt == '-h':
             usage()
             sys.exit()
-    print(args)
+    # print(args)
     if len(args) == 4:
         log_name = args[0]
         first = int(args[1])
@@ -77,16 +78,16 @@ def main(argv):
     except:
         print("Error on ", log_name)
 
-    print(issue[0])
-    print(issue[1])
+    #print(issue[0])
+    #print(issue[1])
 
     delta = 2
     xmin = min(issue[0]) - delta
     if xmin < 0:
         xmin = 0
     xmax = max([a + b for (a, b) in zip(data[0], data[1])]) + delta
-    print(xmin, xmax)
-    if (num_line <= 10):
+    # print(xmin, xmax)
+    if (num_line <= mid_num_line):
         fsize = (10, 5)
         width = 0.35
     else:
@@ -101,6 +102,8 @@ def main(argv):
     for i in range(3):
         colors = colors + tc
 
+    # print(tc)
+
     ax = plt.subplot(111)
     ax.barh(y_pos, issue[1], width, left=issue[0], color=colors, alpha=0.3)
     ax.barh(y_pos + width, cmd[1], width, left=cmd[0], color=colors, alpha=0.5)
@@ -108,11 +111,16 @@ def main(argv):
     
     ax.set_yticks(y_pos + width)
     ax.set_yticklabels(tag)
+    list = ax.get_yticklabels()
+    for tx in list:
+        if tx.get_text().find('Write') > -1:
+            tx.set_color('red')
     ax.set_xlabel('ns')
     plt.tight_layout()
     plt.grid(which='both')
     plt.gca().invert_yaxis()
     plt.xlim(xmin, xmax)
+    plt.subplots_adjust(top=0.95)
     plt.title(chart_title)
     plt.show()
 
