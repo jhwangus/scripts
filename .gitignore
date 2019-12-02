@@ -211,6 +211,14 @@ fabric.properties
 # *.iml
 # *.ipr
 
+# PyCharm
+
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/scripts.iml
+.idea/vcs.xml
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
