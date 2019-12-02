@@ -6,7 +6,7 @@ Usage        : trace_distance.py log_file
 log_file     : trace log file
 
 This script takes the trace log and find the distance distribution 
-between two occurrences of the same address 
+between two occurrences of read-then-write or write-then-read of the same address
 
 Example:
 $ trace_distance.py 12K.log
@@ -49,20 +49,21 @@ def main(argv):
             row = line.strip().split()
             if row[1] in addr:
                 l = addr[row[1]]
-                l.append(count)
+                l.append([count, row[0]])
                 addr[row[1]] = l
             else:
-                addr[row[1]] = [count]
+                addr[row[1]] = [[count, row[0]]]
     # except:
     #    print("Error on ", log_name)
     
-    # calculate the distance
+    # calculate the read-then-write or write-then-read distance
     dist = dict()
     for key in addr:
         line_nums = addr[key]
         dl = []
         for i in range(len(line_nums) - 1):
-            dl.append(line_nums[i+1] - line_nums[i])
+            if (line_nums[i+1][1] != line_nums[i][1]):
+                dl.append(line_nums[i+1][0] - line_nums[i][0])
         for j in range(len(dl)):
             if dl[j] in dist:
                 w = dist[dl[j]]
@@ -70,6 +71,7 @@ def main(argv):
             else:
                 dist[dl[j]] = 1
     # Output
+    print('distance , count')
     for key in sorted(dist.keys()) :
         print(key, ",", dist[key])
 
