@@ -52,7 +52,7 @@ def main(argv):
                 l.append([count, row[0]])
                 addr[row[1]] = l
             else:
-                addr[row[1]] = [[count, row[0]]]
+                addr[row[1]] = [count, row[0]]
     # except:
     #    print("Error on ", log_name)
     
@@ -71,7 +71,6 @@ def main(argv):
             else:
                 dist[dl[j]] = 1
     # Output
-    print('distance , count')
     for key in sorted(dist.keys()) :
         print(key, ",", dist[key])
 

@@ -4,6 +4,6 @@ foreach dir (TLDR_SRAM*)
    echo $dir
    set ac=`echo $dir | tr "[:upper:]" "[:lower:]" | sed 's/tldr_//'`
    echo ${ac}
-   save_plot.py ${dir}/1130_12k_${ac}.csv 2 12 1130_12k_r_${ac}
-   save_plot.py ${dir}/1130_12k_${ac}.csv 3602 12 1130_12k_rw_${ac}
+   save_plot.py ${dir}/1209_1krw_dep_${ac}.csv 2 16 1209_1krw_r_dep_${ac}
+   save_plot.py ${dir}/1209_1krw_dep_${ac}.csv 17 16 1209_1krw_rw_dep_${ac}
 end
